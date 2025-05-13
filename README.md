@@ -140,6 +140,34 @@ The webhook will verify:
 - The token is USDC
 - The amount is exactly 0.01 USDC
 
+**Example Response:**
+```json
+{
+  "status": "success",
+  "amount": 0.01,
+  "token": "USDC",
+  "transactionHash": "your_transaction_hash",
+  "solscanUrl": "https://solscan.io/tx/your_transaction_hash",
+  "from": "sender_address",
+  "to": "your_solana_address"
+}
+```
+
+**Server Logs:**
+```
+=== Incoming Webhook ===
+Event Type: TOKEN_TRANSFER
+Transaction Hash: your_transaction_hash
+Solscan URL: https://solscan.io/tx/your_transaction_hash
+=== Valid USDC Payment Received ===
+Amount: 0.01 USDC
+From: sender_address
+To: your_solana_address
+Transaction Hash: your_transaction_hash
+Solscan URL: https://solscan.io/tx/your_transaction_hash
+===============================
+```
+
 ### 2. Transaction Verification
 
 This endpoint allows you to verify a transaction's details on the blockchain.
@@ -158,9 +186,23 @@ curl "http://localhost:3000/transaction/verify?txHash=your_transaction_hash"
   "transaction": {
     "hash": "your_transaction_hash",
     "amount": "0.01",
-    "token": "USDC"
+    "token": "USDC",
+    "solscanUrl": "https://solscan.io/tx/your_transaction_hash"
   }
 }
+```
+
+**Server Logs:**
+```
+=== Verifying Transaction ===
+Transaction Hash: your_transaction_hash
+Solscan URL: https://solscan.io/tx/your_transaction_hash
+=== Transaction Details ===
+Transaction Hash: your_transaction_hash
+Amount: 0.01
+Token: USDC
+Solscan URL: https://solscan.io/tx/your_transaction_hash
+===============================
 ```
 
 ## Error Handling
